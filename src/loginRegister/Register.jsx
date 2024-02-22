@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./login.css";
 import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import auth from "../config/firebase.config";
+import {createUserWithEmailAndPassword } from "firebase/auth";
+import {auth} from "../config/firebase.config";
 function Register() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -10,8 +10,9 @@ function Register() {
   const [uname, setUname] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  const signUp = async () => {
-    createUserWithEmailAndPassword(auth, email, pass)
+  const signUp = async (e) => {
+    e.preventDefault();
+    await createUserWithEmailAndPassword(auth, email, pass)
       .then((userCred) => {
         const user = userCred.user;
         alert("you signed up successufily");

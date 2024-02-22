@@ -1,52 +1,63 @@
 import React from "react";
 import "./login.css";
 import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import auth from "../config/firebase.config";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import {auth} from "../config/firebase.config";
 import { useState } from "react";
 
-export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [loginError, setLoginError] = useState("");
-  const signIn = signInWithEmailAndPassword(auth, email, pass)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-      alert("u loged in");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      setLoginError(errorMessage);
-    });
+const Login = () => {
+  const [emailL, setEmailL] = useState("");
+  const [passL, setPassL] = useState("");
+  const [error, setError] = useState("");
 
+
+  const signIn = async (e) => {
+    e.preventDefault();
+    //console.log(email, pass, loginError)
+    await signInWithEmailAndPassword(auth, emailL, passL)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+        alert("signed is succesufully");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+
+        const errorMessage = error.message;
+        setError(errorMessage);
+      });
+  };
+  const forgotPass = () => {
+    const email = prompt("please enter your email: ");
+    sendPasswordResetEmail(auth, email);
+    alert("Email sent! check your email inbox to chnage password!!!");
+  }
   return (
     <div className="container">
       <div className="login">
         <form className="login-form">
           <h3 className="title">SIGN IN</h3>
           <div className="inputs">
-          <InputField
-            required
-            type={"password"}
-            placeholder={"Password"}
-            className={"password"}
-            handleChange={(data) => setEmail(data)}
-          />
-          <InputField
-            required
-            type={"password"}
-            placeholder={"Confirm Password"}
-            className={"password"}
-            handleChange={(data) => setPass(data)}
-          />
+            <InputField
+              required
+              type={"email"}
+              placeholder={"email"}
+              className={"email"}
+              handleChange={(data) => setEmailL(data)}
+            />
+            <InputField
+              required
+              type={"password"}
+              placeholder={"Password"}
+              className={"password"}
+              handleChange={(data) => setPassL(data)}
+            />
           </div>
-          <button onClick={() => signIn} className="btn log-in-btn">
+          <button type="submit" onClick={signIn} className="btn log-in-btn">
             Login
           </button>
-          <p className="forgot">FORGOT PASSWORD ?</p>
+          <p onClick={forgotPass} className="forgot">FORGOT PASSWORD ?</p>
           <p className="not-accnt">
             NEED AN ACCOUNT ?{" "}
             <span>
@@ -57,7 +68,7 @@ export const Login = () => {
           </p>
         </form>
       </div>
-      <p style={{ color: "red" }}>{loginError}</p>
+      <p style={{ color: "red" }}>{error}</p>
     </div>
   );
 };
