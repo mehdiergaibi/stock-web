@@ -1,0 +1,55 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+    letter-spacing: 1px;
+  }
+  /* .login {
+    width: 50%;
+  }
+  .register {
+    width: 50%;
+  } */
+  .login-form,
+  .register-form {
+    margin: 60px 10px;
+  }
+  .description {
+    display: none;
+  }
+  .title {
+    text-align: center;
+  }
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .inputs input {
+    height: 30px;
+    font-size: 20px;
+    padding: 5px;
+    outline: none;
+    border: none;
+    background-color: #f5f5f5;
+  }
+  .btn {
+    padding: 5px 10px 5px 10px;
+    margin-top: 10px;
+    background-color: rgba(0, 155, 77);
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  .sgn-in,
+  .forgot,
+  .sgn-up {
+    color: rgba(0, 155, 77);
+    cursor: pointer;
+  }
+  .sgn-in:hover,
+  .forgot:hover,
+  .sgn-up:hover {
+    text-decoration: underline;
+  }
+  
