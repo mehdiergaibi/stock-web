@@ -4,13 +4,17 @@ import { Link } from "react-router-dom";
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../config/firebase.config";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../state/usersSlice";
+
 
 const Login = () => {
+
   const [emailL, setEmailL] = useState("");
   const [passL, setPassL] = useState("");
   const [error, setError] = useState("");
 
-
+const dispatch = useDispatch();
   const signIn = async (e) => {
     e.preventDefault();
     //console.log(email, pass, loginError)
@@ -18,8 +22,14 @@ const Login = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        console.log(user.email, user.uid)
         // ...
-        alert("signed is succesufully");
+alert("oged in")
+        dispatch(setUser({
+          id: user.uid,
+          email: user.email
+        }))
+
       })
       .catch((error) => {
         const errorCode = error.code;

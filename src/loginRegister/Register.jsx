@@ -3,6 +3,9 @@ import "./login.css";
 import { Link } from "react-router-dom";
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../config/firebase.config";
+
+import { useDispatch } from "react-redux";
+import { setUser } from "../state/usersSlice";
 function Register() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -10,19 +13,28 @@ function Register() {
   const [uname, setUname] = useState("");
   const [loginError, setLoginError] = useState("");
 
+  const dispatch = useDispatch();
+
   const signUp = async (e) => {
     e.preventDefault();
-    await createUserWithEmailAndPassword(auth, email, pass)
+
+    if( pass != cpass ) {
+      setLoginError("password and confirmation password dont match");
+    } else{
+      await createUserWithEmailAndPassword(auth, email, pass)
       .then((userCred) => {
         const user = userCred.user;
         alert("you signed up successufily");
         console.log(user);
+        dispatch(setUser({ id: userCred.user.uid, email: userCred.user.email }))
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setLoginError(errorMessage);
       });
+    }
+    
   };
 
   return (
