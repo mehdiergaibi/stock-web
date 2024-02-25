@@ -10,19 +10,23 @@ import { selectUser } from "./state/usersSlice";
 import { useSelector } from "react-redux";
 
 function App() {
-  const user = useSelector(selectUser);
+  const user = useSelector(selectUser((state) => state.user));
+  console.log("select user",selectUser);
+  console.log("user",user);
+  console.log("current user",user.currentUser);
   return (
-    <div>
-      {user ? (
+    <>
+      {user.currentUser ? (
+        
         <Routes>
-          <Route index element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
       ) : (
         <Login />
       )}
-    </div>
+    </>
   );
 }
 

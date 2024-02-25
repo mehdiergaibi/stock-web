@@ -3,19 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
-    isLoading: false,
-    error: null
+    currentUser: null,
   },
 
   reducers: {
-    setUser: (state, action) => {
-      console.log("set user", action.payload);
+    setUser: (state = initialState, action) => {
       state.currentUser = action.payload;
+      console.log("Action payload", action.payload)
     },
   },
 });
 
+
 export const { setUser } = userSlice.actions;
-export const selectUser = (state) => state.user;
+export const selectUser = (state) => {
+  console.log(state); // { mySlice: { ... }}
+  return state;
+}; // i am using ? because it shows undefind
+
+
+
 export default userSlice.reducer;

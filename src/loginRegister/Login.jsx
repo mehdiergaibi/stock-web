@@ -1,20 +1,40 @@
 import React from "react";
 import "./login.css";
 import { Link } from "react-router-dom";
-import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
-import {auth} from "../config/firebase.config";
+import {
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../config/firebase.config";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../state/usersSlice";
 
-
 const Login = () => {
-
+  const [isLoading, setIsLoading] = useState(true);
   const [emailL, setEmailL] = useState("");
   const [passL, setPassL] = useState("");
   const [error, setError] = useState("");
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      dispatch(
+        setUser({
+          id: user.uid,
+          email: user.email,
+        })
+      );
+    } else {
+      dispatch(setUser(null));
+    }
+    if(isLoading){
+      setIsLoading(false)
+    }
+  });
+
   const signIn = async (e) => {
     e.preventDefault();
     //console.log(email, pass, loginError)
@@ -22,14 +42,14 @@ const dispatch = useDispatch();
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user.email, user.uid)
+        console.log(user.email, user.uid);
         // ...
-alert("oged in")
-        dispatch(setUser({
-          id: user.uid,
-          email: user.email
-        }))
-
+        dispatch(
+          setUser({
+            id: user.uid,
+            email: user.email,
+          })
+        );
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -42,8 +62,10 @@ alert("oged in")
     const email = prompt("please enter your email: ");
     sendPasswordResetEmail(auth, email);
     alert("Email sent! check your email inbox to chnage password!!!");
-  }
+  };
   return (
+    <>
+    { isLoading && <div className="loading" ><h1 >Loading....</h1></div> }
     <div className="container">
       <div className="login">
         <form className="login-form">
@@ -67,7 +89,9 @@ alert("oged in")
           <button type="submit" onClick={signIn} className="btn log-in-btn">
             Login
           </button>
-          <p onClick={forgotPass} className="forgot">FORGOT PASSWORD ?</p>
+          <p onClick={forgotPass} className="forgot">
+            FORGOT PASSWORD ?
+          </p>
           <p className="not-accnt">
             NEED AN ACCOUNT ?{" "}
             <span>
@@ -80,6 +104,8 @@ alert("oged in")
       </div>
       <p style={{ color: "red" }}>{error}</p>
     </div>
+    </>
+    
   );
 };
 const InputField = ({ placeholder, handleChange, type }) => {

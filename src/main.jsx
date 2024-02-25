@@ -4,17 +4,12 @@ import App from './App.jsx'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { createStore, combineReducers } from "redux";
+import store from "./state/store.js"
 import usersSlice from "./state/usersSlice";
 import { Provider } from "react-redux";
 
 
 import './index.css'
-
-const rootReducer = combineReducers({
-  mySlice: usersSlice,
-});
-
-const store = createStore(rootReducer);
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
