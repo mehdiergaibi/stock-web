@@ -9,16 +9,16 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state = initialState, action) => {
       state.currentUser = action.payload;
-      console.log("Action payload", action.payload)
-    },
+/*       console.log("Action payload", action.payload)
+ */    },
   },
 });
 
 
 export const { setUser } = userSlice.actions;
 export const selectUser = (state) => {
-  console.log(state); // { mySlice: { ... }}
-  return state;
+/*   console.log(state); // { mySlice: { ... }}
+ */  return state;
 }; // i am using ? because it shows undefind
 
 

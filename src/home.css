@@ -1,0 +1,59 @@
+.home-compos {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin: auto;
+}
+.info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.log-out-btn {
+  background-color: brown;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.home {
+  max-width: 900px;
+  margin: auto;
+  height: 100%;
+}
+.products-actions {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.products-actions div {
+  width: 300px;
+  background-color: rgba(0, 155, 77);
+  margin: auto;
+  border-radius: 10px;
+  padding: 10px;
+  -webkit-box-shadow: 7px -1px 51px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 7px -1px 51px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 7px -1px 51px 1px rgba(0, 0, 0, 0.75);
+}
+.products-actions div button {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 10px;
+  width: 60px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.go-icon {
+  font-size: 20px;
+  color: black;
+}

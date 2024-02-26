@@ -8,12 +8,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import { selectUser } from "./state/usersSlice";
 import { useSelector } from "react-redux";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   const user = useSelector(selectUser((state) => state.user));
-  console.log("select user",selectUser);
-  console.log("user",user);
-  console.log("current user",user.currentUser);
   return (
     <>
       {user.currentUser ? (
@@ -22,6 +20,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/add-product" element={<AddProduct />} />
         </Routes>
       ) : (
         <Login />
